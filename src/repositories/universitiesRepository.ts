@@ -3,7 +3,16 @@ import { db } from "../config/db.js";
 async function getAllUniversities(PAGINATION: number, DATA_LIMIT: number) {
   return await db
     .collection("universities")
-    .find()
+    .aggregate([
+      {
+        $project: {
+          name: 1,
+          _id: 1,
+          country: 1,
+          "state-province": 1,
+        },
+      },
+    ])
     .skip(PAGINATION)
     .limit(DATA_LIMIT)
     .toArray();
@@ -16,7 +25,24 @@ async function getUniversitiesFilteredByCountry(
 ) {
   return await db
     .collection("universities")
-    .find({ country: { $regex: `^${countryQuery}$`, $options: "i" } })
+    .aggregate([
+      {
+        $project: {
+          name: 1,
+          _id: 1,
+          country: 1,
+          "state-province": 1,
+        },
+      },
+      {
+        $match: {
+          country: {
+            $regex: `^${countryQuery}$`,
+            $options: "i",
+          },
+        },
+      },
+    ])
     .skip(PAGINATION)
     .limit(DATA_LIMIT)
     .toArray();
