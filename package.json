@@ -8,7 +8,10 @@
     "build": "tsc",
     "start": "node ./dist/server.ts",
     "dev": "nodemon src/server.ts",
-    "store": "ts-node ./src/scripts/storeUniversities.ts"
+    "store": "ts-node ./src/scripts/storeUniversities.ts",
+    "test:integration": "NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest -- -i --coverage --testPathPattern=tests/integration --forceExit",
+    "test:unit": "NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest -- -i --coverage --testPathPattern=tests/unit",
+    "dev:test": "dotenv -e .env.test nodemon src/server.ts"
   },
   "keywords": [],
   "author": "",

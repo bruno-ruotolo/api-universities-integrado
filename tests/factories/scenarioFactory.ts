@@ -1,5 +1,11 @@
+import { db, mongoClient } from "../../src/config/db.js";
 import axios from "axios";
-import { db, mongoClient } from "../config/db.js";
+
+export async function resetData() {
+  await db.collection("universities").deleteMany({});
+  const insertedCount = await retrieveUniversities();
+  return insertedCount;
+}
 
 export default async function retrieveUniversities() {
   const baseUrl = "http://universities.hipolabs.com/search?country=";
@@ -24,11 +30,13 @@ export default async function retrieveUniversities() {
       const universities = await axios.get(`${baseUrl}${country}`);
       universitiesList = universitiesList.concat(universities.data);
     }
-    await storeUniversities(universitiesList);
+    const insertedCount = await storeUniversities(universitiesList);
 
     console.log(
       "All required universities have been successfully stored in the database"
     );
+
+    return insertedCount;
   } catch (error) {
     console.log("Something got wrong", error);
   }
@@ -36,6 +44,9 @@ export default async function retrieveUniversities() {
 
 async function storeUniversities(universitiesList: any) {
   console.log("Storing Universities on DB...");
-  await db.collection("universities").insertMany(universitiesList);
-  mongoClient.close();
+  const result = await db
+    .collection("universities")
+    .insertMany(universitiesList);
+  const { insertedCount } = result;
+  return insertedCount;
 }
