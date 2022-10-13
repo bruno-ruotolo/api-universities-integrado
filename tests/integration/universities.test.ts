@@ -21,4 +21,40 @@ describe("GET /universities test suite", () => {
     expect(result.body).toHaveLength(UNIVERSITIES_TOTAL_QUANTITY);
     expect(statusCode).toBe(200);
   });
+
+  it("given one filter, return 200 and filtered universities", async () => {
+    const UNIVERSITIES_TOTAL_QUANTITY = 6;
+    const COUNTRY_FILTER = "Uruguay";
+
+    const result = await agent.get(`/universities?country=${COUNTRY_FILTER}`);
+    const { statusCode } = result;
+
+    expect(result).not.toBeNull();
+    expect(result).not.toBeUndefined();
+    expect(result).not.toBeFalsy();
+    expect(result.body).toHaveLength(UNIVERSITIES_TOTAL_QUANTITY);
+    expect(result.body[0].country).toEqual(COUNTRY_FILTER);
+    expect(statusCode).toBe(200);
+  });
+
+  it("given two filter, return 200 and filtered universities", async () => {
+    const UNIVERSITIES_TOTAL_QUANTITY = 7;
+    const COUNTRY_FILTER = "Uruguay";
+    const SECOND_COUNTRY_FILTER = "Suriname";
+
+    const result = await agent.get(
+      `/universities?country=${COUNTRY_FILTER}&country=${SECOND_COUNTRY_FILTER}`
+    );
+    const { statusCode } = result;
+
+    expect(result).not.toBeNull();
+    expect(result).not.toBeUndefined();
+    expect(result).not.toBeFalsy();
+    expect(result.body).toHaveLength(UNIVERSITIES_TOTAL_QUANTITY);
+    expect(result.body[0].country).toEqual(COUNTRY_FILTER);
+    expect(result.body[result.body.length - 1].country).toEqual(
+      SECOND_COUNTRY_FILTER
+    );
+    expect(statusCode).toBe(200);
+  });
 });
