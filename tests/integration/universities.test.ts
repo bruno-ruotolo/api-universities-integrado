@@ -1,6 +1,8 @@
+import { faker } from "@faker-js/faker";
 import app from "../../src/app.js";
 import supertest from "supertest";
 import { resetData } from "../factories/scenarioFactory.js";
+import { getAnUniversityId } from "../factories/universitesFactory.js";
 
 let insertedCount = 0;
 beforeEach(async () => {
@@ -72,5 +74,28 @@ describe("GET /universities test suite", () => {
     expect(result).not.toBeFalsy();
     expect(result.body.length).toBeLessThanOrEqual(20);
     expect(statusCode).toBe(200);
+  });
+});
+
+describe("GET /universities/:id test suite", () => {
+  it("given a valid Id, return 200 and university data", async () => {
+    const id = await getAnUniversityId();
+    const result = await agent.get(`/universities/${id}`);
+    const { statusCode } = result;
+
+    expect(result).not.toBeNull();
+    expect(result).not.toBeUndefined();
+    expect(result).not.toBeFalsy();
+    expect(result.body._id).toEqual(id);
+    expect(statusCode).toBe(200);
+  });
+
+  it("given a invalid Id, return 400 and no data", async () => {
+    const id = faker.random.numeric(10);
+    const result = await agent.get(`/universities/${id}`);
+    const { statusCode } = result;
+
+    expect(result.body._id).toBeFalsy();
+    expect(statusCode).toBe(400);
   });
 });

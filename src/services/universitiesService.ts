@@ -1,4 +1,6 @@
 import universitiesRepository from "../repositories/universitiesRepository.js";
+import { Blob } from "node:buffer";
+import { badRequestError } from "../utils/errorUtils.js";
 
 export async function getAllUniversitiesService(
   countryQuery: string | string[],
@@ -27,4 +29,12 @@ export async function getAllUniversitiesService(
     DATA_LIMIT
   );
   return universitiesList;
+}
+
+export async function getUniversityService(universityId: string) {
+  const byteSize = (str: string) => new Blob([str]).size;
+  if (byteSize(universityId) === 12 || universityId.length === 24) {
+    return await universitiesRepository.getUniversityById(universityId);
+  }
+  throw badRequestError("Invalid university Id");
 }

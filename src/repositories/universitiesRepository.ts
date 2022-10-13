@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { db } from "../config/db.js";
 
 async function getAllUniversities(PAGINATION: number, DATA_LIMIT: number) {
@@ -48,9 +49,14 @@ async function getUniversitiesFilteredByCountry(
     .toArray();
 }
 
+async function getUniversityById(id: string) {
+  return await db.collection("universities").findOne({ _id: new ObjectId(id) });
+}
+
 const universitiesRepository = {
   getAllUniversities,
   getUniversitiesFilteredByCountry,
+  getUniversityById,
 };
 
 export default universitiesRepository;
