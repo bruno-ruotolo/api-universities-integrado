@@ -1,13 +1,24 @@
 import { db } from "../config/db.js";
 
-async function getAllUniversities() {
-  return await db.collection("universities").find().toArray();
-}
-
-async function getUniversitiesFilteredByCountry(query: string) {
+async function getAllUniversities(PAGINATION: number, DATA_LIMIT: number) {
   return await db
     .collection("universities")
-    .find({ country: { $regex: `^${query}$`, $options: "i" } })
+    .find()
+    .skip(PAGINATION)
+    .limit(DATA_LIMIT)
+    .toArray();
+}
+
+async function getUniversitiesFilteredByCountry(
+  countryQuery: string,
+  PAGINATION: number,
+  DATA_LIMIT: number
+) {
+  return await db
+    .collection("universities")
+    .find({ country: { $regex: `^${countryQuery}$`, $options: "i" } })
+    .skip(PAGINATION)
+    .limit(DATA_LIMIT)
     .toArray();
 }
 
