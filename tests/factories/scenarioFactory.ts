@@ -1,3 +1,4 @@
+import { CreateUniversity } from "./../../src/interfaces/index";
 import { db, mongoClient } from "../../src/config/db.js";
 import axios from "axios";
 
@@ -49,4 +50,8 @@ async function storeUniversities(universitiesList: any) {
     .insertMany(universitiesList);
   const { insertedCount } = result;
   return insertedCount;
+}
+
+export async function createUniversityFactory(data: CreateUniversity) {
+  return await db.collection("universities").insertOne(data);
 }

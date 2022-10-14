@@ -1,8 +1,16 @@
+import { CreateUniversity } from "./../../src/interfaces/index";
 import { faker } from "@faker-js/faker";
 import app from "../../src/app.js";
 import supertest from "supertest";
-import { resetData } from "../factories/scenarioFactory.js";
-import { getAnUniversityId } from "../factories/universitesFactory.js";
+import {
+  createUniversityFactory,
+  resetData,
+} from "../factories/scenarioFactory.js";
+import {
+  createFakeUniversityData,
+  getAnUniversityId,
+} from "../factories/universitesFactory.js";
+import { db } from "../../src/config/db.js";
 
 let insertedCount = 0;
 beforeEach(async () => {
@@ -15,7 +23,6 @@ describe("GET /universities test suite", () => {
     const UNIVERSITIES_TOTAL_QUANTITY = insertedCount > 20 ? 20 : insertedCount;
 
     const result = await agent.get(`/universities`);
-    ("");
     const { statusCode } = result;
 
     expect(result).not.toBeNull();
@@ -97,5 +104,21 @@ describe("GET /universities/:id test suite", () => {
 
     expect(result.body._id).toBeFalsy();
     expect(statusCode).toBe(400);
+  });
+});
+
+describe("POST /universities test suite", () => {
+  it("given valid infos, return 201 and create university on DB", async () => {
+    const DATA: CreateUniversity = createFakeUniversityData();
+
+    const result = await agent.post(`/universities`).send(DATA);
+    const { statusCode } = result;
+    const createdData = await db.collection("universities").findOne(DATA);
+
+    expect(createdData).not.toBeNull();
+    expect(createdData).not.toBeUndefined();
+    expect(createdData).not.toBeFalsy();
+    expect(createdData.name).toEqual(DATA.name);
+    expect(statusCode).toBe(201);
   });
 });

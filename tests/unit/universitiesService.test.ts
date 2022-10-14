@@ -1,9 +1,19 @@
+import {
+  CreateUniversity,
+  UpdateUniversity,
+} from "./../../src/interfaces/index";
 import { faker } from "@faker-js/faker";
 import { jest } from "@jest/globals";
 
 import * as universitiesService from "../../src/services/universitiesService.js";
 import universitiesRepository from "../../src/repositories/universitiesRepository.js";
-import { badRequestError } from "../../src/utils/errorUtils.js";
+import {
+  badRequestError,
+  conflictError,
+  notFoundError,
+} from "../../src/utils/errorUtils.js";
+import { createFakeUniversityData } from "../factories/universitesFactory.js";
+import { createUniversityFactory } from "../factories/scenarioFactory";
 
 jest.mock("../../src/repositories/universitiesRepository");
 jest.resetAllMocks();
@@ -63,5 +73,45 @@ describe("get an university unit tests suite", () => {
     const promise = universitiesService.getUniversityService(ID);
 
     expect(promise).rejects.toEqual(badRequestError("Invalid university Id"));
+  });
+});
+
+describe("create an university unit tests suite", () => {
+  it("given valid infos, should call getUniversityByNameByCountryByState and createUniversity", async () => {
+    const DATA: CreateUniversity = createFakeUniversityData();
+
+    jest
+      .spyOn(universitiesRepository, "getUniversityByNameByCountryByState")
+      .mockImplementationOnce((): any => {});
+
+    jest
+      .spyOn(universitiesRepository, "createUniversity")
+      .mockImplementationOnce((): any => {});
+
+    await universitiesService.createUniversityService(DATA);
+
+    expect(universitiesService.createUniversityService).resolves;
+    expect(
+      universitiesRepository.getUniversityByNameByCountryByState
+    ).toBeCalled();
+    expect(universitiesRepository.createUniversity).toBeCalled();
+  });
+
+  it("given registered university, should return conflict error", async () => {
+    const DATA: CreateUniversity = createFakeUniversityData();
+
+    jest
+      .spyOn(universitiesRepository, "getUniversityByNameByCountryByState")
+      .mockImplementationOnce((): any => {
+        return DATA;
+      });
+    const promise = universitiesService.createUniversityService(DATA);
+
+    expect(promise).rejects.toEqual(
+      conflictError("This university is already registered")
+    );
+    expect(
+      universitiesRepository.getUniversityByNameByCountryByState
+    ).toBeCalled();
   });
 });
