@@ -8,7 +8,6 @@ import {
 } from "../controllers/universitiesController.js";
 import { schemaValidator } from "../middlewares/schemaValidatorMiddleware.js";
 import universitySchema from "../schemas/universitiesSchema.js";
-import createUniversitySchema from "../schemas/universitiesSchema.js";
 
 const universitiesRoute = Router();
 
