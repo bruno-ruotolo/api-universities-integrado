@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node ./dist/server.ts",
+    "start": "node ./dist/src/server.js",
+    "deploy": "npm run build && npm run start",
     "dev": "nodemon src/server.ts",
     "store": "ts-node ./src/scripts/storeUniversities.ts",
     "test:integration": "NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest -- -i --coverage --testPathPattern=tests/integration --forceExit",
