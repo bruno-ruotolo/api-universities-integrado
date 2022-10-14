@@ -1,5 +1,6 @@
-import { CreateUniversity, UpdateUniversity } from "./../interfaces/index";
 import Joi from "joi";
+
+import { CreateUniversity, UpdateUniversity } from "./../interfaces/index";
 
 const createUniversitySchema = Joi.object<CreateUniversity>({
   alpha_two_code: Joi.string().max(2).required(),

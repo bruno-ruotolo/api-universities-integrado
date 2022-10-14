@@ -1,6 +1,7 @@
-import { CreateUniversity, UpdateUniversity } from "./../interfaces/index";
 import { ObjectId } from "mongodb";
+
 import { db } from "../config/db.js";
+import { CreateUniversity, UpdateUniversity } from "./../interfaces/index";
 
 async function getAllUniversities(PAGINATION: number, DATA_LIMIT: number) {
   return await db

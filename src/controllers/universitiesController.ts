@@ -1,5 +1,6 @@
-import { CreateUniversity, UpdateUniversity } from "./../interfaces/index";
 import { Request, Response } from "express";
+
+import { CreateUniversity, UpdateUniversity } from "./../interfaces/index";
 import {
   createUniversityService,
   deleteUniversityService,

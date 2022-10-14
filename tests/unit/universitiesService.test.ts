@@ -1,19 +1,11 @@
-import {
-  CreateUniversity,
-  UpdateUniversity,
-} from "./../../src/interfaces/index";
 import { faker } from "@faker-js/faker";
 import { jest } from "@jest/globals";
 
+import { CreateUniversity } from "./../../src/interfaces/index";
 import * as universitiesService from "../../src/services/universitiesService.js";
 import universitiesRepository from "../../src/repositories/universitiesRepository.js";
-import {
-  badRequestError,
-  conflictError,
-  notFoundError,
-} from "../../src/utils/errorUtils.js";
+import { badRequestError, conflictError } from "../../src/utils/errorUtils.js";
 import { createFakeUniversityData } from "../factories/universitesFactory.js";
-import { createUniversityFactory } from "../factories/scenarioFactory";
 
 jest.mock("../../src/repositories/universitiesRepository");
 jest.resetAllMocks();

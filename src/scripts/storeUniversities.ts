@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { db, mongoClient } from "../config/db.js";
 
 export default async function retrieveUniversities() {
@@ -33,6 +34,7 @@ export default async function retrieveUniversities() {
     console.log("Something got wrong", error);
   }
 }
+retrieveUniversities();
 
 async function storeUniversities(universitiesList: any) {
   console.log("Storing Universities on DB...");

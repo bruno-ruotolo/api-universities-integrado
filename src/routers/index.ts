@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 import universitiesRoute from "./universitiesRouter.js";
 
 const mainRouter = Router();

@@ -1,6 +1,7 @@
+import { Blob } from "node:buffer";
+
 import { UpdateUniversity } from "./../interfaces/index";
 import universitiesRepository from "../repositories/universitiesRepository.js";
-import { Blob } from "node:buffer";
 import {
   badRequestError,
   conflictError,

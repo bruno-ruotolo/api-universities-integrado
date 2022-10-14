@@ -1,8 +1,9 @@
+import { faker } from "@faker-js/faker";
+
 import {
   CreateUniversity,
   UpdateUniversity,
 } from "./../../src/interfaces/index";
-import { faker } from "@faker-js/faker";
 import { db } from "../../src/config/db.js";
 
 export async function getAnUniversityId() {

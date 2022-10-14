@@ -1,6 +1,7 @@
-import { CreateUniversity } from "./../../src/interfaces/index";
-import { db, mongoClient } from "../../src/config/db.js";
 import axios from "axios";
+
+import { CreateUniversity } from "./../../src/interfaces/index";
+import { db } from "../../src/config/db.js";
 
 export async function resetData() {
   await db.collection("universities").deleteMany({});

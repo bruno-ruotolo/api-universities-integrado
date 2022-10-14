@@ -1,11 +1,9 @@
-import { CreateUniversity } from "./../../src/interfaces/index";
-import { faker } from "@faker-js/faker";
-import app from "../../src/app.js";
 import supertest from "supertest";
-import {
-  createUniversityFactory,
-  resetData,
-} from "../factories/scenarioFactory.js";
+import { faker } from "@faker-js/faker";
+
+import { CreateUniversity } from "./../../src/interfaces/index";
+import app from "../../src/app.js";
+import { resetData } from "../factories/scenarioFactory.js";
 import {
   createFakeUniversityData,
   getAnUniversityId,

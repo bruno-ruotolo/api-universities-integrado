@@ -18,8 +18,6 @@ export function errorStatusCode(type: ErrorTypes) {
   const statusCodeMap = new Map([
     ["conflict", 409],
     ["not_found", 404],
-    ["unauthorized", 401],
-    ["unprocessable_entity", 422],
     ["bad_request", 400],
   ]);
 
@@ -36,14 +34,6 @@ export function notFoundError(message?: string) {
   return { type: "not_found", message };
 }
 
-export function unauthorizedError(message?: string) {
-  return { type: "unauthorized", message };
-}
-
 export function badRequestError(message?: string) {
   return { type: "bad_request", message };
-}
-
-export function unprocessableEntityError(message?: string) {
-  return { type: "unprocessable_entity", message };
 }
