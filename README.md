@@ -4,7 +4,7 @@
     <p> An API to check, store and register worldwide universities </p>
 </div>
 
-## Technologies
+## Technologies 💻
 These are the main tools, frameworks and languages that were used in this project:<br>
 
 <div>
@@ -17,17 +17,17 @@ These are the main tools, frameworks and languages that were used in this projec
   <img style='margin: 5px;' src="https://img.shields.io/badge/SuperTest-9254ff?style=for-the-badge&logo=supertest"/>
 </div>
 
-## How to Run
+## How to Run 🏃‍♀️
 
-You can use this API cloning this repository 
-
-To clone the project, run the following command:
+You can use this API cloning this repository. To clone it, run the following command:
 
 ```git
 git clone https://github.com/bruno-ruotolo/api-universities-integrado.git
 ```
 
-Then, navigate to the project folder and run the following command to install the dependences:
+_Note: This command use the HTTPS to clone the project, you can clone it using the SSH protocol or GitHub Cli, following the clone guide on the project main page_
+
+Then, navigate to the project folder and run the following command to install the dependencies:
 
 ```git
 npm i
@@ -43,7 +43,7 @@ MONGO_DB_NAME = Your database name
 
 Now you can initialize the mongoDB server on you machine, in case it's down.
 
-Run the following script to receive and store the universities data from the website _http://universities.hipolabs.com/search_ on your MongoDB database:
+Run the following script to receive and store on your MongoDB database, the universities data from the website _http://universities.hipolabs.com/search_:
 
 ```git
 npm run store
@@ -57,7 +57,7 @@ npm run deploy
 
 This script will build and run the project.
 
-# API Reference
+# API Reference 📓
 
 Here you can check the endpoints related to the project, as well as their respective characteristics. Have Fun 😄
 
@@ -67,7 +67,7 @@ Here you can check the endpoints related to the project, as well as their respec
 #### Get All Universities
 - GET _/universities_
 
-Here you can add the filters _?country=_ and  _?page=_, to filtered by country and acess a specifica page, respectively,
+Here you can add the filters ``?country=`` and/or  ``?page=``, to filtered by country and access a specific page, respectively,
 since the API return a limit of 20 universities per page.
 
 - Response
@@ -105,7 +105,7 @@ since the API return a limit of 20 universities per page.
 ---
 
 #### Create University
-- POST _/university_
+- POST _/universities_
 
 - Body
 ```json
@@ -121,7 +121,7 @@ since the API return a limit of 20 universities per page.
 ---
 
 #### Update University
-- PUT _/university/:universityId_
+- PUT _/universities/:universityId_
 
 - Body
 ```json
@@ -133,8 +133,43 @@ since the API return a limit of 20 universities per page.
 ```
 
 #### Delete University
-- DELETE _/university/:universityId_
+- DELETE _/universities/:universityId_
 
+---
+
+# How to Test 🧪
+
+In this project you can run unit and integration tests.
+
+First at all, after clonning the project and installing the dependencies (see _How to run_ section), 
+you need to configure your _.env.test_ file based on the _.envExample_ given on the project folder:
+
+```git
+PORT = Your Test Server Running Port
+MONGO_URI = MongoDB test connection string (for localhost use: mongodb://localhost:27017)
+MONGO_DB_NAME = Your test database name
+```
+
+Initialize the mongoDB server on you machine, in case it's down.
+
+Run the following scripts to run the tests:
+
+## Unit Tests
+```git
+npm run test:unit
+```
+
+## Integration Tests
+```git
+npm run test:integration
+```
+
+## Development Test Server
+You can run an development test server:
+
+```git
+dev:test
+```
 ---
 
 ## Authors
